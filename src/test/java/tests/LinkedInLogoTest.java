@@ -15,7 +15,7 @@ public class LinkedInLogoTest extends BaseTest {
 
     @Test
     public void linkedInLogoTest() {
-        removeTimeout();
+        driverManager.removeTimeout();
         driver.get(WebUrls.SOUCEDEMO_MAIN_URL);
         driver.findElement(By.id("user-name")).sendKeys(USERNAME);
         driver.findElement(By.id("password")).sendKeys(PASSWORD);
