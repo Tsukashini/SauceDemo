@@ -1,45 +1,28 @@
 package tests;
 
-import org.openqa.selenium.By;
+import driver.DriverFactory;
+import driver.DriverManager;
+import driver.DriverType;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import staticdata.WebTimeouts;
-import utilities.PropertiesManager;
-
-import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
     WebDriver driver;
+    DriverManager driverManager;
 
     @BeforeMethod
     public void setUp() {
-        PropertiesManager propertiesManager = new PropertiesManager();
-        System.setProperty("webdriver.chrome.driver", propertiesManager.get("PATH_TO_CHROME_DRIVER"));
-        driver = new ChromeDriver();
-        setTimeout();
+        DriverFactory factory = new DriverFactory();
+        driverManager = factory.getManager(DriverType.MOZILLA);
+        driverManager.createDriver();
+        driver = driverManager.getDriver();
+        driverManager.maximize();
+        driverManager.setTimeout();
     }
 
-    public void setTimeout() {
-        driver.manage().timeouts().setScriptTimeout(WebTimeouts.SCRIPT_TIMEOUT, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(WebTimeouts.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(WebTimeouts.IMPLICIT_WAIT_TIMEOUT, TimeUnit.SECONDS);
-    }
-
-    public void removeTimeout() {
-        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-    }
-
-    public void webDriverWaitTimeout(By locator) {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-    }
-
-    @AfterMethod()
+    @AfterMethod(alwaysRun = true)
     public void tearDown() {
-        driver.quit();
+        driverManager.quitDriver();
     }
 }
