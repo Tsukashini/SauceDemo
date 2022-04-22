@@ -7,14 +7,16 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
+import java.net.MalformedURLException;
+
 public class BaseTest {
     WebDriver driver;
     DriverManager driverManager;
 
     @BeforeMethod
-    public void setUp() {
+    public void setUp() throws MalformedURLException {
         DriverFactory factory = new DriverFactory();
-        driverManager = factory.getManager(DriverType.MOZILLA);
+        driverManager = factory.getManager(DriverType.REMOTE);
         driverManager.createDriver();
         driver = driverManager.getDriver();
         driverManager.maximize();
