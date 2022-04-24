@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import staticdata.WebUrls;
+import utilities.Retry;
 
 
 public class LinkedInLogoTest extends BaseTest {
@@ -13,7 +14,7 @@ public class LinkedInLogoTest extends BaseTest {
     private static final String PASSWORD = "secret_sauce";
 
 
-    @Test
+    @Test (retryAnalyzer = Retry.class)
     public void linkedInLogoTest() {
         driverManager.removeTimeout();
         driver.get(WebUrls.SOUCEDEMO_MAIN_URL);

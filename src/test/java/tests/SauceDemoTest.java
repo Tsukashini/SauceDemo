@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import staticdata.WebUrls;
+import utilities.Retry;
 
 public class SauceDemoTest extends BaseTest{
     private static final String USERNAME ="standard_user";
@@ -11,7 +12,7 @@ public class SauceDemoTest extends BaseTest{
 
 
 
-    @Test
+    @Test (retryAnalyzer = Retry.class)
     public void SignIn() {
         driver.get(WebUrls.SOUCEDEMO_MAIN_URL);
         driver.findElement(By.id("user-name")).sendKeys(USERNAME);
