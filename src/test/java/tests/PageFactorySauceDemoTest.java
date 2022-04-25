@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import pagefactororypages.CardPage;
 import pagefactororypages.InventoryPage;
 import pagefactororypages.LoginPage;
+import utilities.Retry;
 
 public class PageFactorySauceDemoTest extends BaseTest {
     LoginPage loginPage;
@@ -14,7 +15,7 @@ public class PageFactorySauceDemoTest extends BaseTest {
     private static final String USERNAME = "standard_user";
     private static final String PASSWORD = "secret_sauce";
 
-    @Test
+    @Test (retryAnalyzer = Retry.class)
     public void CardAddingTest() {
         loginPage = new LoginPage(driver);
         inventoryPage = new InventoryPage(driver);
